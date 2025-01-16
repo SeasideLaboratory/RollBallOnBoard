@@ -6,9 +6,9 @@ using System.Threading;
 public class SerialRead : MonoBehaviour
 {
     // シリアル通信用定義
-    public string portName = "COM16"; //★
-    public int baudRate    = 115200; //★
-    private static SerialPort serialPort_;
+    public string portName = "COM16"; // micro:bitをUSB接続した時のCOMポート設定
+    public int baudRate = 115200; // micro:bitをUSB接続した時のボーレート設定
+    private static SerialPort serialPort;
 
     // シリアル通信で送られてくる加速度データをスターティックに
     public static int angleX;
@@ -19,8 +19,8 @@ public class SerialRead : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        serialPort_ = new SerialPort(portName, baudRate, Parity.None, 8, StopBits.One);
-        serialPort_.Open();
+        serialPort = new SerialPort(portName, baudRate, Parity.None, 8, StopBits.One);
+        serialPort.Open();
         angleX = 0;
         angleXprev = 0;
         angleY = 0;
@@ -31,9 +31,9 @@ public class SerialRead : MonoBehaviour
     void Update()
     {
         // シリアル読み出し
-        if (serialPort_ != null && serialPort_.IsOpen) {
+        if (serialPort != null && serialPort.IsOpen) {
             try {
-                string message = serialPort_.ReadLine();
+                string message = serialPort.ReadLine();
                 //Debug.Log(message);
 
                 bool errorFlag = false;
